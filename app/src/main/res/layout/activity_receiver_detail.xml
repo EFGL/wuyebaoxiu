@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E0F7FA">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/rd_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="10dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="确认接单"
+        app:titleTextColor="#fff" />
+    <com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        app:mlpb_arrow_height="5dp"
+        app:mlpb_arrow_width="10dp"
+        android:visibility="gone"
+        app:mlpb_enable_circle_background="true"
+        app:mlpb_progress_color="@color/colorAccent"
+        app:mlpb_progress_stoke_width="5dp"
+        app:mlpb_show_arrow="true" />
+    <ScrollView
+        android:layout_below="@id/rd_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="报修人"
+                android:textSize="18sp" />
+
+            <include layout="@layout/view_horizontal" />
+
+            <TextView
+                android:id="@+id/receiver_detail_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="张三"
+                android:textColor="#000"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="报修电话"
+                android:textSize="18sp" />
+
+            <include layout="@layout/view_horizontal" />
+
+            <TextView
+                android:id="@+id/receuver_detail_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="13843838438"
+                android:textColor="#000"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="报修时间"
+                android:textSize="18sp" />
+
+            <include layout="@layout/view_horizontal" />
+
+            <TextView
+                android:id="@+id/receiver_deatail_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2011-1-1-1-1-1-1-1"
+                android:textColor="#000"
+                android:textSize="15sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="报修地址"
+                android:textSize="18sp" />
+
+            <include layout="@layout/view_horizontal" />
+
+            <TextView
+                android:id="@+id/receiver_deatail_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3号楼3-22室"
+                android:textColor="#000"
+                android:textSize="15sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="报修详情"
+                android:textSize="18sp" />
+
+            <include layout="@layout/view_horizontal" />
+
+            <TextView
+                android:id="@+id/receiver_deatail_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="水管子破了锅破了筷子破了"
+                android:textColor="#000"
+                android:textSize="15sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="派单人"
+                android:textSize="18sp" />
+
+            <include layout="@layout/view_horizontal" />
+
+            <TextView
+                android:id="@+id/receiver_deatail_sir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="雷主管"
+                android:textColor="#000"
+                android:textSize="15sp" />
+            <Button
+                android:id="@+id/receiver_deatail_ok"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:background="@color/colorAccent"
+                android:text="接单"
+                android:textColor="#fff"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
