@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
+import com.google.gson.Gson;
+import com.gz.repair.bean.FeedBackDetail;
 import com.gz.repair.utils.T;
 import com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar;
 
@@ -140,26 +142,28 @@ public class FeedDetailActivity extends Activity {
         params.addParameter("end_at", endTime);
         params.addParameter("result", des);
         params.addParameter("code", code);
+        params.addParameter("root_id", MyAppcation.rootId);
 
-        Log.e("user_name", MyAppcation.userName);
-        Log.e("begin_at", startTime);
-        Log.e("end_at", endTime);
-        Log.e("result", des);
-        Log.e("code", code);
+//        Log.e("user_name", MyAppcation.userName);
+//        Log.e("begin_at", startTime);
+//        Log.e("end_at", endTime);
+//        Log.e("result", des);
+
         x.http().post(params, new Callback.CommonCallback<String>() {
 
 
             @Override
             public void onSuccess(String result) {
                 Log.e("my", "反馈onSuccess" + result);
-//                Gson gson = new Gson();
-//                ReceiveDetail receive = gson.fromJson(result, ReceiveDetail.class);
-//                T.showShort(ReceiverDetailActivity.this, receive.msg);
+                Gson gson = new Gson();
+                FeedBackDetail fbd = gson.fromJson(result, FeedBackDetail.class);
+                T.showShort(FeedDetailActivity.this, fbd.msg);
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 Log.e("my", "onError" + ex.toString());
+                T.showShort(FeedDetailActivity.this,ex.toString());
             }
 
             @Override
