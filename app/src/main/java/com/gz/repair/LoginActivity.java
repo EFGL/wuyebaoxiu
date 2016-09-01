@@ -1,6 +1,7 @@
 package com.gz.repair;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -8,10 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.widget.MaterialDialog;
 import com.google.gson.Gson;
+import com.gz.repair.bean.CidBean;
 import com.gz.repair.bean.Login;
 import com.gz.repair.utils.T;
 import com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar;
@@ -41,6 +44,7 @@ public class LoginActivity extends BaseActivity {
     Button sign_in;
     @Bind(R.id.progressBar)
     CircleProgressBar progressBar;
+    SharedPreferences config;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,13 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
+
+        config = getSharedPreferences("config",MODE_PRIVATE);
+//        String userName = config.getString("userName", "");
+//        String password = config.getString("password", "");
+//
+//        mUser.setText(userName);
+//        pwd.setText(password);
     }
 
 
@@ -77,7 +88,7 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    private void login(String user, String password) {
+    private void login(final String user, final String password) {
         Log.e("my", "开始请求");
         progressBar.setVisibility(View.VISIBLE);
         String url = MyAppcation.baseUrl + "/repair_login";
@@ -108,6 +119,10 @@ public class LoginActivity extends BaseActivity {
 //                Log.e("my", "login.toString==" + login.toString());
                 if (login.ret == 0) {
 
+                    config.edit().putString("userName",user).commit();
+                    config.edit().putString("password",password).commit();
+
+
                     T.showShort(LoginActivity.this, login.msg);
                     ArrayList<Login.Result.Privileges> privileges = login.result.privileges;
                     MyAppcation.pro.clear();
@@ -115,6 +130,14 @@ public class LoginActivity extends BaseActivity {
                     MyAppcation.userId = login.result.user_id;
                     MyAppcation.rootId = login.result.root_id;
                     MyAppcation.userName = login.result.user_name;
+//                    Log.e("is==", LoginActivity.this.getSharedPreferences("config", MODE_PRIVATE).getBoolean("isSuccess", true) + "");
+                    if (MyAppcation.userId != -1 && MyAppcation.clientid != null &&
+                            LoginActivity.this.getSharedPreferences("config", MODE_PRIVATE).getBoolean("isSuccess", true)) {
+
+//                        Log.e("is==", LoginActivity.this.getSharedPreferences("config", MODE_PRIVATE).getBoolean("isSuccess", true) + "");
+                        subCid();
+                    }
+
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
                 }
@@ -141,6 +164,48 @@ public class LoginActivity extends BaseActivity {
 
     }
 
+    private void subCid() {
+        Log.e("my", "开始请求");
+
+        String url = MyAppcation.baseUrl + "/generator_clientid";
+        RequestParams params = new RequestParams(url);
+        params.addParameter("user_id", MyAppcation.userId);
+        params.addParameter("clientid", MyAppcation.clientid);
+
+        x.http().post(params, new Callback.CommonCallback<String>() {
+
+            @Override
+            public void onSuccess(String result) {
+                Log.e("my", "onSuccess" + result);
+                Gson gson = new Gson();
+                CidBean c = gson.fromJson(result, CidBean.class);
+
+                if (c.ret == 0) {
+                    LoginActivity.this.getSharedPreferences("config", MODE_PRIVATE).edit().putBoolean("isSuccess", false).commit();
+                    Log.e("is==", LoginActivity.this.getSharedPreferences("config", MODE_PRIVATE).getBoolean("isSuccess", true) + "");
+                }
+                Toast.makeText(LoginActivity.this, "cid" + c.msg, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("my", "onError" + ex.toString());
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+                Log.e("my", "onCancelled" + cex.toString());
+            }
+
+            @Override
+            public void onFinished() {
+                Log.e("my", "onFinished");
+            }
+
+        });
+    }
+
+
     private void showDialog() {
         final MaterialDialog dialog = new MaterialDialog(this);
         dialog.content(
@@ -163,5 +228,20 @@ public class LoginActivity extends BaseActivity {
                 }
         );
     }
+
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            // 返回键最小化程序
+//            Intent intent = new Intent(Intent.ACTION_MAIN);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            intent.addCategory(Intent.CATEGORY_HOME);
+//            startActivity(intent);
+//            return true;
+//        }
+//
+//        return super.onKeyDown(keyCode, event);
+//    }
+
 }
 

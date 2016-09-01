@@ -136,7 +136,6 @@ public class FeedDetailActivity extends Activity {
         Log.e("my", "开始请求");
         String url = MyAppcation.baseUrl + "/repair_feedback";
         RequestParams params = new RequestParams(url);
-
         params.addParameter("user_name", MyAppcation.userName);
         params.addParameter("begin_at", startTime);
         params.addParameter("end_at", endTime);
@@ -202,6 +201,10 @@ public class FeedDetailActivity extends Activity {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if(pvTime.isShowing()){
                 pvTime.dismiss();
+                return true;
+            }
+            if(pvTime2.isShowing()){
+                pvTime2.dismiss();
                 return true;
             }
 

@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.flyco.dialog.listener.OnBtnClickL;
-import com.flyco.dialog.widget.MaterialDialog;
 import com.flyco.dialog.widget.NormalDialog;
 import com.gz.repair.bean.Login;
 import com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar;
@@ -32,8 +31,6 @@ public class MainActivity extends BaseActivity {
     TextView t4;
     @Bind(R.id.t5)
     TextView t5;
-    @Bind(R.id.t6)
-    TextView t6;
     @Bind(R.id.c1)
     CardView c1;
     @Bind(R.id.c2)
@@ -44,8 +41,6 @@ public class MainActivity extends BaseActivity {
     CardView c4;
     @Bind(R.id.c5)
     CardView c5;
-    @Bind(R.id.c6)
-    CardView c6;
     @Bind(R.id.progressBar)
     CircleProgressBar progressBar;
 
@@ -87,11 +82,10 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.t1, R.id.t2, R.id.t3, R.id.t4, R.id.t5, R.id.t6})
+    @OnClick({R.id.t1, R.id.t2, R.id.t3, R.id.t4, R.id.t5})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.t1:
-                showDialog();
                 break;
             case R.id.t2:
                 progressBar.setVisibility(View.VISIBLE);
@@ -106,11 +100,10 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(this, BackActivity.class));
                 break;
             case R.id.t5:
-                showDialog();
+                progressBar.setVisibility(View.VISIBLE);
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
-            case R.id.t6:
-                showDialog();
-                break;
+
         }
 
     }
@@ -149,31 +142,15 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onBtnClick() {
                         dialog.superDismiss();
-                        finish();
+                        // 最小化
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        startActivity(intent);
+
+//                        finish();
                     }
                 });
     }
 
-    private void showDialog() {
-        final MaterialDialog dialog = new MaterialDialog(this);
-        dialog.content(
-                "正在开发")
-                .btnNum(1)
-                .btnText("确定")//
-                .title("提示")
-//                .contentTextColor(Color.parseColor("#0097A7"))
-                .titleTextColor(Color.parseColor("#006064"))
-                .showAnim(mBasIn)//
-                .dismissAnim(mBasOut)//
-                .show();
-
-        dialog.setOnBtnClickL(
-                new OnBtnClickL() {//left btn click listener
-                    @Override
-                    public void onBtnClick() {
-                        dialog.dismiss();
-                    }
-                }
-        );
-    }
 }

@@ -18,4 +18,5 @@
     <string name="title_activity_detail">派工详情</string>
     <string name="title_activity_receiver_detail">确认接单</string>
     <string name="title_activity_feed_detail">FeedDetailActivity</string>
+    <string name="title_activity_splash">物业报修</string>
 </resources>
