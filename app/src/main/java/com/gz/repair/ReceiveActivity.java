@@ -108,7 +108,7 @@ public class ReceiveActivity extends BaseActivity {
 //                Log.e("my", "login.toString==" + login.toString());
                     if (receive.ret == 0) {
 
-                        T.showShort(ReceiveActivity.this, receive.msg);
+//                        T.showShort(ReceiveActivity.this, receive.msg);
                         allData = receive.result;
                         initViews();
                     }
@@ -168,7 +168,7 @@ public class ReceiveActivity extends BaseActivity {
 //                Log.e("my", "login.toString==" + login.toString());
                         if (receive.ret == 0) {
 
-                            T.showShort(ReceiveActivity.this, receive.msg);
+//                            T.showShort(ReceiveActivity.this, receive.msg);
                             allData.clear();
                             allData.addAll(receive.result);
                             myAdapter.notifyDataSetChanged();

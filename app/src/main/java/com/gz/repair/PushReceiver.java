@@ -31,6 +31,7 @@ public class PushReceiver extends BroadcastReceiver {
                 boolean result = PushManager.getInstance().sendFeedbackMessage(context, taskid, messageid, 90001);
                 System.out.println("第三方回执接口调用" + (result ? "成功" : "失败"));
 
+
                 if (payload != null) {
                     String data = new String(payload);
 
@@ -44,7 +45,7 @@ public class PushReceiver extends BroadcastReceiver {
                 // 获取ClientID(CID)
                 // 第三方应用需要将CID上传到第三方服务器，并且将当前用户帐号和CID进行关联，以便日后通过用户帐号查找CID进行消息推送
                 String cid = bundle.getString("clientid");
-                Toast.makeText(context,"clientid="+cid,Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context,"clientid="+cid,Toast.LENGTH_SHORT).show();
                 if (cid!=null){
 
                     MyAppcation.clientid = cid;

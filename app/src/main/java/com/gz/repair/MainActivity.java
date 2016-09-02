@@ -43,6 +43,8 @@ public class MainActivity extends BaseActivity {
     CardView c5;
     @Bind(R.id.progressBar)
     CircleProgressBar progressBar;
+    @Bind(R.id.tv_user)
+    TextView tvUser;
 
 
     @Override
@@ -51,6 +53,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        tvUser.setText(MyAppcation.userName);
 
     }
 

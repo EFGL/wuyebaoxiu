@@ -5,32 +5,50 @@
     android:layout_height="match_parent"
     android:background="#E0F7FA">
 
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/main_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="10dp"
+        android:gravity="right"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:title="物业报修"
-        app:titleTextColor="#fff" />
+        app:titleTextColor="#fff">
+
+        <TextView
+            android:id="@+id/tv_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@android:color/transparent"
+            android:layout_gravity="right"
+            android:text="用户"
+            android:layout_marginRight="5dp"
+            android:textColor="#fff"
+            android:textSize="15sp" />
+    </android.support.v7.widget.Toolbar>
+
+
     <com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar
         android:id="@+id/progressBar"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_centerInParent="true"
+        android:visibility="gone"
         app:mlpb_arrow_height="5dp"
         app:mlpb_arrow_width="10dp"
-        android:visibility="gone"
         app:mlpb_enable_circle_background="true"
         app:mlpb_progress_color="@color/colorAccent"
         app:mlpb_progress_stoke_width="5dp"
         app:mlpb_show_arrow="true" />
+
     <ScrollView
-        android:layout_below="@id/main_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/main_toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,13 +57,13 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/c1"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="25dp"
+                android:visibility="gone"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="6dp">
 
@@ -59,11 +77,11 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:visibility="gone"
                 android:id="@+id/c2"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_margin="10dp"
+                android:visibility="gone"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="6dp">
 
@@ -78,10 +96,10 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/c3"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_margin="10dp"
+                android:visibility="gone"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="6dp">
 
@@ -96,10 +114,10 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/c4"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_margin="10dp"
+                android:visibility="gone"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="6dp">
 

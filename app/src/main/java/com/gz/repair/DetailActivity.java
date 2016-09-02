@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -44,25 +44,24 @@ public class DetailActivity extends Activity {
     @Bind(R.id.tv_person)
     TextView mPerson;
     @Bind(R.id.preson)
-    RelativeLayout preson;
+    RelativeLayout rlPreson;
     @Bind(R.id.detail)
     TextView detail;
-    @Bind(R.id.photo)
-    ImageView photo;
-    @Bind(R.id.ok)
-    Button ok;
     @Bind(R.id.tv_wxf)
     TextView tvWxf;
     @Bind(R.id.rl_wxf)
     RelativeLayout rlWxf;
     @Bind(R.id.progressBar)
     CircleProgressBar progressBar;
+    @Bind(R.id.et_repair_preson)
+    EditText mRepairPreson;
     private String code;
     private String maintainer;
     private int maintainer_id;
     private ArrayList<RepairPerson.Result> person;
     private ArrayList<String> pName;
     private int repair_type = 0;
+    private boolean threeIsShow = false;// 第三方输入框是否显示
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +81,8 @@ public class DetailActivity extends Activity {
         mAddress.setText(address);
         detail.setText(info);
 
+        tvWxf.setText(wxfStringItems[0]);
+
         getPersonFromServer();
 
 
@@ -95,7 +96,7 @@ public class DetailActivity extends Activity {
 
                     NormalListDialogCustomAttr();
                 } else {
-                    T.showShort(DetailActivity.this, "获取派工人员失败");
+                    T.showShort(DetailActivity.this, "派工人员获取失败");
                 }
 
                 break;
@@ -130,6 +131,16 @@ public class DetailActivity extends Activity {
 //                T.showShort(DetailActivity.this, mStringItems[position]);
                 tvWxf.setText(wxfStringItems[position]);
                 repair_type = position;
+                if (position == 1) {
+                    rlPreson.setVisibility(View.GONE);
+                    mRepairPreson.setVisibility(View.VISIBLE);
+                    threeIsShow = true;
+                }
+                if (position == 0) {
+                    mRepairPreson.setVisibility(View.GONE);
+                    rlPreson.setVisibility(View.VISIBLE);
+                    threeIsShow = false;
+                }
                 dialog.dismiss();
             }
         });
@@ -137,52 +148,66 @@ public class DetailActivity extends Activity {
 
 
     private void subForServer() {
+        if (threeIsShow) {
+            String name = mRepairPreson.getText().toString().trim();
+            if (TextUtils.isEmpty(name)) {
+                T.showShort(DetailActivity.this,"请输入维修人员姓名");
+                return;
+            }
+        }
         progressBar.setVisibility(View.VISIBLE);
-            Log.e("my", "开始请求");
-            String url = MyAppcation.baseUrl + "/repair_distribute";
-            RequestParams params = new RequestParams(url);
+        Log.e("my", "开始请求");
+        String url = MyAppcation.baseUrl + "/repair_distribute";
+        RequestParams params = new RequestParams(url);
 
-            params.addParameter("code", code);
+        params.addParameter("code", code);
+
+        if (threeIsShow) {
+            String name = mRepairPreson.getText().toString().trim();
+            params.addParameter("maintainer", name);
+            params.addParameter("maintainer_id", "");
+        } else {
+
             params.addParameter("maintainer", maintainer);
             params.addParameter("maintainer_id", maintainer_id);
-            params.addParameter("repair_type", repair_type);
-            params.addParameter("user_name", MyAppcation.userName);
+        }
+        params.addParameter("repair_type", repair_type);
+        params.addParameter("user_name", MyAppcation.userName);
 
-            x.http().post(params, new Callback.CommonCallback<String>() {
+        x.http().post(params, new Callback.CommonCallback<String>() {
 
 
-                @Override
-                public void onSuccess(String result) {
-                    Log.e("my", "onSuccess" + result);
+            @Override
+            public void onSuccess(String result) {
+                Log.e("my", "onSuccess" + result);
 
-                    SubProject sub = new Gson().fromJson(result, SubProject.class);
-                    if (sub.msg != null) {
+                SubProject sub = new Gson().fromJson(result, SubProject.class);
+                if (sub.msg != null) {
 
-                        T.showShort(DetailActivity.this, sub.msg);
-                    }
+                    T.showShort(DetailActivity.this, sub.msg);
                 }
+            }
 
-                @Override
-                public void onError(Throwable ex, boolean isOnCallback) {
-                    Log.e("my", "onError" + ex.toString());
-                }
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("my", "onError" + ex.toString());
+            }
 
-                @Override
-                public void onCancelled(CancelledException cex) {
-                    Log.e("my", "onCancelled" + cex.toString());
-                }
+            @Override
+            public void onCancelled(CancelledException cex) {
+                Log.e("my", "onCancelled" + cex.toString());
+            }
 
-                @Override
-                public void onFinished() {
-                    Log.e("my", "onFinished");
-                    progressBar.setVisibility(View.GONE);
-                }
+            @Override
+            public void onFinished() {
+                Log.e("my", "onFinished");
+                progressBar.setVisibility(View.GONE);
+            }
 
-            });
+        });
 
 
     }
-
 
     public void getPersonFromServer() {
         Log.e("my", "开始请求");
@@ -211,7 +236,7 @@ public class DetailActivity extends Activity {
                 RepairPerson repairPerson = gson.fromJson(result, RepairPerson.class);
                 if (repairPerson.ret == 0) {
 
-                    T.showShort(DetailActivity.this, repairPerson.msg);
+//                    T.showShort(DetailActivity.this, repairPerson.msg);
 
                     person = repairPerson.result;
                     pName = new ArrayList<String>();

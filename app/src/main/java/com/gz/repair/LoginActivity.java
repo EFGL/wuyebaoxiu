@@ -131,8 +131,7 @@ public class LoginActivity extends BaseActivity {
                     MyAppcation.rootId = login.result.root_id;
                     MyAppcation.userName = login.result.user_name;
 //                    Log.e("is==", LoginActivity.this.getSharedPreferences("config", MODE_PRIVATE).getBoolean("isSuccess", true) + "");
-                    if (MyAppcation.userId != -1 && MyAppcation.clientid != null &&
-                            LoginActivity.this.getSharedPreferences("config", MODE_PRIVATE).getBoolean("isSuccess", true)) {
+                    if (MyAppcation.userId != -1 && MyAppcation.clientid != null) {
 
 //                        Log.e("is==", LoginActivity.this.getSharedPreferences("config", MODE_PRIVATE).getBoolean("isSuccess", true) + "");
                         subCid();
@@ -180,10 +179,10 @@ public class LoginActivity extends BaseActivity {
                 Gson gson = new Gson();
                 CidBean c = gson.fromJson(result, CidBean.class);
 
-                if (c.ret == 0) {
-                    LoginActivity.this.getSharedPreferences("config", MODE_PRIVATE).edit().putBoolean("isSuccess", false).commit();
-                    Log.e("is==", LoginActivity.this.getSharedPreferences("config", MODE_PRIVATE).getBoolean("isSuccess", true) + "");
-                }
+//                if (c.ret == 0) {
+//                    LoginActivity.this.getSharedPreferences("config", MODE_PRIVATE).edit().putBoolean("isSuccess", false).commit();
+////                    Log.e("is==", LoginActivity.this.getSharedPreferences("config", MODE_PRIVATE).getBoolean("isSuccess", true) + "");
+//                }
                 Toast.makeText(LoginActivity.this, "cid" + c.msg, Toast.LENGTH_SHORT).show();
             }
 

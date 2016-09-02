@@ -164,7 +164,7 @@ public class ProjectActivity extends BaseActivity {
 //                Log.e("my", "login.toString==" + login.toString());
                 if (project.ret == 0) {
 
-                    T.showShort(ProjectActivity.this, project.msg);
+//                    T.showShort(ProjectActivity.this, project.msg);
                     alldata.clear();
                     alldata.addAll(project.result);
                     myAdapter.notifyDataSetChanged();

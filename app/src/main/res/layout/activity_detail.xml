@@ -118,16 +118,15 @@
 
             <RelativeLayout
                 android:id="@+id/rl_wxf"
-                android:layout_width="70dp"
+                android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:padding="3dp">
 
                 <TextView
                     android:id="@+id/tv_wxf"
-                    android:layout_width="90dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="物业"
                     android:textColor="#000"
                     android:textSize="15sp" />
 
@@ -149,16 +148,15 @@
 
             <RelativeLayout
                 android:id="@+id/preson"
-                android:layout_width="70dp"
+                android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:padding="3dp">
 
                 <TextView
                     android:id="@+id/tv_person"
-                    android:layout_width="90dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="张三"
                     android:textColor="#000"
                     android:textSize="15sp" />
 
@@ -169,13 +167,11 @@
                     android:src="@drawable/ic_pull" />
             </RelativeLayout>
 
-
-            <ImageView
-                android:id="@+id/photo"
+            <EditText
+                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="20dp"
-                android:src="@mipmap/ic_launcher" />
+                android:layout_height="wrap_content"
+                android:id="@+id/et_repair_preson"/>
 
             <Button
                 android:id="@+id/ok"
@@ -184,7 +180,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="30dp"
                 android:background="@color/colorAccent"
-                android:text="确定派工"
+                android:text="派工"
                 android:textColor="#fff"
                 android:textStyle="bold" />
         </LinearLayout>
