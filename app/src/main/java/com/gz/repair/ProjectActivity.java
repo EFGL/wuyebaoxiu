@@ -1,6 +1,7 @@
 package com.gz.repair;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -207,6 +208,14 @@ public class ProjectActivity extends BaseActivity {
         public void onBindViewHolder(MyHolder holder, final int position) {
 
             holder.mAddress.setText("地址:" + alldata.get(position).address);
+            String state = alldata.get(position).status;
+            if (state.equals("待处理")){
+                holder.mState.setTextColor(Color.RED);
+            }else if (state.equals("已派单")){
+                holder.mState.setTextColor(Color.GREEN);
+
+            }
+            holder.mState.setText(alldata.get(position).status);
             holder.mInfo.setText("内容:" + alldata.get(position).info);
             holder.mTime.setText("" + StringUtils.str2Time(alldata.get(position).created_at));
             holder.mNumber.setText("单号:" + alldata.get(position).code);
@@ -235,7 +244,8 @@ public class ProjectActivity extends BaseActivity {
 
 
     class MyHolder extends RecyclerView.ViewHolder {
-
+        @Bind(R.id.item_project_state)
+        TextView mState;
         @Bind(R.id.item_project_address)
         TextView mAddress;
         @Bind(R.id.item_project_info)

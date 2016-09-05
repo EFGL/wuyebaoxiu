@@ -118,7 +118,7 @@
 
             <RelativeLayout
                 android:id="@+id/rl_wxf"
-                android:layout_width="90dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:padding="3dp">
 
@@ -148,13 +148,13 @@
 
             <RelativeLayout
                 android:id="@+id/preson"
-                android:layout_width="90dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:padding="3dp">
 
                 <TextView
                     android:id="@+id/tv_person"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:textColor="#000"
