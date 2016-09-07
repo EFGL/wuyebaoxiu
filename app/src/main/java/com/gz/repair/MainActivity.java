@@ -45,6 +45,10 @@ public class MainActivity extends BaseActivity {
     CircleProgressBar progressBar;
     @Bind(R.id.tv_user)
     TextView tvUser;
+    @Bind(R.id.t6)
+    TextView t6;
+    @Bind(R.id.c6)
+    CardView c6;
 
 
     @Override
@@ -83,9 +87,14 @@ public class MainActivity extends BaseActivity {
             c4.setVisibility(View.VISIBLE);
 
         }
+        if (ids.contains("96")) {
+            c6.setVisibility(View.VISIBLE);
+
+        }
+
     }
 
-    @OnClick({R.id.t1, R.id.t2, R.id.t3, R.id.t4, R.id.t5})
+    @OnClick({R.id.t1, R.id.t2, R.id.t3, R.id.t4, R.id.t5, R.id.t6})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.t1:
@@ -105,6 +114,10 @@ public class MainActivity extends BaseActivity {
             case R.id.t5:
                 progressBar.setVisibility(View.VISIBLE);
                 startActivity(new Intent(this, LoginActivity.class));
+                break;
+            case R.id.t6:
+                progressBar.setVisibility(View.VISIBLE);
+                startActivity(new Intent(this, FeedbackActivity.class));
                 break;
 
         }

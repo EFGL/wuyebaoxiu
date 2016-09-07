@@ -46,7 +46,7 @@ public class SplashActivity extends BaseActivity {
             public void run() {
                 super.run();
                 try {
-                    sleep(500);
+                    sleep(300);
 
                     checkUpdate();
                 } catch (InterruptedException e) {
