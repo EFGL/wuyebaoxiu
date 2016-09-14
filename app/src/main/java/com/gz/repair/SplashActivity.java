@@ -195,6 +195,7 @@ public class SplashActivity extends BaseActivity {
                 //当前进度和文件总大小
                 Log.e("my", "下载中...");
                 Log.i("JAVA", "current：" + current + "，total：" + total);
+                T.showShort(SplashActivity.this,"正在下载,请等待...");
             }
         });
     }

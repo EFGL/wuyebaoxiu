@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E0F7FA">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/rd_toolbar"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="10dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="反馈详情"
-        app:titleTextColor="#fff" />
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/rd_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="10dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="反馈详情"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:titleTextColor="#fff" />
+    </android.support.design.widget.AppBarLayout>
 
     <com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar
         android:id="@+id/progressBar"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_centerInParent="true"
+        android:layout_gravity="center"
         android:visibility="gone"
         app:mlpb_arrow_height="5dp"
         app:mlpb_arrow_width="10dp"
@@ -29,10 +35,10 @@
         app:mlpb_progress_stoke_width="5dp"
         app:mlpb_show_arrow="true" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/rd_toolbar">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -173,6 +179,31 @@
                     android:textSize="15sp" />
             </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="上传照片"
+                android:textSize="18sp" />
+
+            <include layout="@layout/view_horizontal" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rcy_photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+       <!--     <Button
+                android:onClick="subimg"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:background="@color/colorAccent"
+                android:text="上传"
+                android:textColor="#fff"
+                android:textStyle="bold" />-->
+
             <Button
                 android:id="@+id/feed_deatail_ok"
                 style="?android:textAppearanceSmall"
@@ -183,8 +214,10 @@
                 android:text="反馈"
                 android:textColor="#fff"
                 android:textStyle="bold" />
+
+
         </LinearLayout>
 
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+// 主管 - 维修记录
 public class FeedbackActivity extends Activity {
 
     @Bind(R.id.rcy)
@@ -222,6 +223,10 @@ public class FeedbackActivity extends Activity {
                         i.putExtra("telephone", allData.get(position).telephone);
                         i.putExtra("address", allData.get(position).address);
                         i.putExtra("info", allData.get(position).info);
+                        i.putExtra("image_1", allData.get(position).image_1);
+                        i.putExtra("image_2", allData.get(position).image_2);
+                        i.putExtra("image_3", allData.get(position).image_3);
+                        i.putExtra("image_4", allData.get(position).image_4);
                         FeedbackActivity.this.startActivity(i);
 
 
