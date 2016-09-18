@@ -3,6 +3,7 @@ package com.gz.repair;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -29,7 +30,9 @@ public class FeedPhotoDetailActivity extends Activity {
 
         String path = getIntent().getStringExtra("path");
 
-        Glide.with(this).load(path).into(pv);
+        Log.w("ende","photo path = "+path);
+
+        Glide.with(this).load(path).placeholder(R.drawable.load).error(R.drawable.error).into(pv);
 
         pv.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
             @Override

@@ -32,6 +32,7 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -172,7 +173,7 @@ public class FeedDetailActivity extends Activity {
                 Glide.with(FeedDetailActivity.this).load(R.drawable.ic_add).into(holder.photo);
                 holder.detele.setVisibility(View.GONE);
             } else {
-                Glide.with(FeedDetailActivity.this).load(allPhotos.get(position)).into(holder.photo);
+                Glide.with(FeedDetailActivity.this).load(allPhotos.get(position)).thumbnail(0.1f).into(holder.photo);
                 holder.detele.setVisibility(View.VISIBLE);
             }
 
@@ -317,7 +318,7 @@ public class FeedDetailActivity extends Activity {
                 Gson gson = new Gson();
                 FeedBackDetail fbd = gson.fromJson(result, FeedBackDetail.class);
                 T.showShort(FeedDetailActivity.this, fbd.msg);
-                if(fbd.ret==0){
+                if(fbd.ret==0&&fbd.msg.equals("反馈成功")){
 
                     image();
                 }
@@ -368,9 +369,11 @@ public class FeedDetailActivity extends Activity {
         RequestParams params = new RequestParams(url);
 //        String fileName = FileUtils.getFileName(allPhotos.get(i));
 //        Log.w("fileName==",fileName);
+        // 字符串参数用 addQueryStringParameter 方法  否则在设置表单上传后addBodyParameter/addParameter方法传都是文件形式
         params.addQueryStringParameter("file_name", FileUtils.getFileName(allPhotos.get(i)));
         // 使用multipart表单上传文件
         params.setMultipart(true);
+        params.addBodyParameter("file", new File(allPhotos.get(i)));
 
 //        ByteArrayOutputStream bos=new ByteArrayOutputStream();
 //        Bitmap bm = BitmapFactory.decodeFile(allPhotos.get(i));
@@ -378,7 +381,6 @@ public class FeedDetailActivity extends Activity {
 //        Bitmap bitmap = compressByQuality(BitmapFactory.decodeFile(allPhotos.get(i)), 40);
 //        ImageUtils.save(bitmap,getFilesDir(), Bitmap.CompressFormat.JPEG);
 //
-//        params.addBodyParameter("file", new File(allPhotos.get(i)));
 
 
         x.http().post(params, new Callback.CommonCallback<String>() {
