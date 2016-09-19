@@ -192,8 +192,8 @@
                 android:id="@+id/rcy_photo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-
-       <!--     <Button
+<!--
+           <Button
                 android:onClick="subimg"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"

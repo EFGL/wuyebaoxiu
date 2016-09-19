@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -31,8 +33,9 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -220,8 +223,8 @@ public class FeedDetailActivity extends Activity {
                 // 获取返回的图片列表
                 List<String> path = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
                 // 处理你自己的逻辑 ....
-//                T.showLong(FeedDetailActivity.this, path.toString());
 
+                Log.e("FeedDetailActivity", "new path ==" + allPhotos.toString());
                 if (path.size() + allPhotos.size() <= 5) {
 
                     allPhotos.addAll(0, path);
@@ -233,7 +236,10 @@ public class FeedDetailActivity extends Activity {
                     }
 
                 }
+                Log.e("FeedDetailActivity", "old path =="+path.toString());
+                compressImage();//压缩图片 替换路径
                 myAdapter.notifyDataSetChanged();
+
 
             }
         }
@@ -290,15 +296,19 @@ public class FeedDetailActivity extends Activity {
         if (allPhotos.size() > 1) {
             for (int i = 0; i < allPhotos.size() - 1; i++) {
 
-                if (i== 0){
+                if (i == 0) {
 
                     params.addParameter("image_1", FileUtils.getFileName(allPhotos.get(i)));
-                }else if (i==1){
+                    Log.e("反馈", "file_name==" + FileUtils.getFileName(allPhotos.get(i)));
+                } else if (i == 1) {
                     params.addParameter("image_2", FileUtils.getFileName(allPhotos.get(i)));
-                }else if (i==2){
+                    Log.e("反馈", "file_name==" + FileUtils.getFileName(allPhotos.get(i)));
+                } else if (i == 2) {
                     params.addParameter("image_3", FileUtils.getFileName(allPhotos.get(i)));
-                }else if (i==3){
+                    Log.e("反馈", "file_name==" + FileUtils.getFileName(allPhotos.get(i)));
+                } else if (i == 3) {
                     params.addParameter("image_4", FileUtils.getFileName(allPhotos.get(i)));
+                    Log.e("反馈", "file_name==" + FileUtils.getFileName(allPhotos.get(i)));
                 }
 
             }
@@ -318,7 +328,7 @@ public class FeedDetailActivity extends Activity {
                 Gson gson = new Gson();
                 FeedBackDetail fbd = gson.fromJson(result, FeedBackDetail.class);
                 T.showShort(FeedDetailActivity.this, fbd.msg);
-                if(fbd.ret==0&&fbd.msg.equals("反馈成功")){
+                if (fbd.ret == 0 && fbd.msg.equals("反馈成功")) {
 
                     image();
                 }
@@ -346,7 +356,7 @@ public class FeedDetailActivity extends Activity {
         });
     }
 
-// 上传图片
+    // 上传图片
     public void image() {
 //        progressBar.setVisibility(View.VISIBLE);
 
@@ -362,26 +372,66 @@ public class FeedDetailActivity extends Activity {
 //        progressBar.setVisibility(View.GONE);
     }
 
+    // 测试方法
+    public void subimg(View v) {
+        String url = MyAppcation.baseUrl + "/repair_distribute_image_upload";
+        for ( int i = 0; i < allPhotos.size() - 1; i++) {
+
+
+            RequestParams params = new RequestParams(url);
+            params.addQueryStringParameter("file_name", FileUtils.getFileName(allPhotos.get(i)));
+            params.setMultipart(true);
+            params.addBodyParameter("file", new File(allPhotos.get(i)));
+//        params.addBodyParameter("file", PhotoUtil.scal(allPhotos.get(0)));
+
+
+            x.http().post(params, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    Log.w("phone", "onSuccess:" + result);
+
+                    try {
+                        JSONObject jo = new JSONObject(result);
+                        String msg = jo.getString("msg");
+
+                        T.showShort(FeedDetailActivity.this, msg);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    Log.w("phone", "onError:" + ex.toString());
+//                T.showLong(FeedDetailActivity.this, "onError:" + ex.toString());
+                }
+
+                @Override
+                public void onCancelled(CancelledException cex) {
+                    Log.w("phone", "onCancelled:" + cex.toString());
+                }
+
+                @Override
+                public void onFinished() {
+                    Log.w("phone", "onFinished:");
+                }
+            });
+        }
+    }
+
     private void subImg(final int i) {
 
         String url = MyAppcation.baseUrl + "/repair_distribute_image_upload";
 
         RequestParams params = new RequestParams(url);
-//        String fileName = FileUtils.getFileName(allPhotos.get(i));
-//        Log.w("fileName==",fileName);
+
         // 字符串参数用 addQueryStringParameter 方法  否则在设置表单上传后addBodyParameter/addParameter方法传都是文件形式
         params.addQueryStringParameter("file_name", FileUtils.getFileName(allPhotos.get(i)));
+        Log.e("subImage","file_name=="+FileUtils.getFileName(allPhotos.get(i)));
         // 使用multipart表单上传文件
         params.setMultipart(true);
         params.addBodyParameter("file", new File(allPhotos.get(i)));
-
-//        ByteArrayOutputStream bos=new ByteArrayOutputStream();
-//        Bitmap bm = BitmapFactory.decodeFile(allPhotos.get(i));
-//        bm.compress(Bitmap.CompressFormat.JPEG, 40, bos);
-//        Bitmap bitmap = compressByQuality(BitmapFactory.decodeFile(allPhotos.get(i)), 40);
-//        ImageUtils.save(bitmap,getFilesDir(), Bitmap.CompressFormat.JPEG);
-//
-
 
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
@@ -391,7 +441,7 @@ public class FeedDetailActivity extends Activity {
                 try {
                     JSONObject jo = new JSONObject(result);
                     String msg = jo.getString("msg");
-                    T.showShort(FeedDetailActivity.this, "第" + (i+1) + "张" + msg);
+                    T.showShort(FeedDetailActivity.this, "第" + (i + 1) + "张" + msg);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -406,7 +456,7 @@ public class FeedDetailActivity extends Activity {
 
             @Override
             public void onCancelled(CancelledException cex) {
-                Log.w("phone", "onCancelled:"+cex.toString());
+                Log.w("phone", "onCancelled:" + cex.toString());
             }
 
             @Override
@@ -449,34 +499,53 @@ public class FeedDetailActivity extends Activity {
         }
         return super.onKeyDown(keyCode, event);
     }
-    /**
-     * 按质量压缩
-     *
-     * @param src     源图片
-     * @param quality 质量
-     * @return 质量压缩后的图片
-     */
-    private  Bitmap compressByQuality(Bitmap src, int quality) {
-        return compressByQuality(src, quality, false);
+
+    // 压缩图片 = 替换allphoto 集合
+    public void compressImage() {
+
+        if (allPhotos == null || allPhotos.size() < 2) {
+            return;
+        } else {
+            FileOutputStream fos = null;
+            Bitmap src = null;
+            for (int i = 0; i < allPhotos.size() - 1; i++) {
+                try {
+                    src = BitmapFactory.decodeFile(allPhotos.get(i));// 获取原图的位图对象
+//                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String timeStamp = "JPEG_" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+
+                    File dirFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);// 得到picture文件夹目录
+                    File tempFile = File.createTempFile(timeStamp, ".jpg", dirFile);// 在得到picture目录下创建 tempFile 文件
+
+                    String strPath = Uri.fromFile(tempFile).getPath();// 图片路径
+
+                    fos = new FileOutputStream(new File(strPath));// 根据图片路径得到输出流
+
+                    boolean cp = src.compress(Bitmap.CompressFormat.JPEG, 30, fos);// 压缩70%
+
+                    if (cp) {
+                        allPhotos.remove(i);
+                        allPhotos.add(i, strPath);
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                } finally {
+                    try {
+                        if (!src.isRecycled()) {
+
+                            src.recycle();
+                        }
+                        fos.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        }
+
     }
 
-    /**
-     * 按质量压缩
-     *
-     * @param src     源图片
-     * @param quality 质量
-     * @param recycle 是否回收
-     * @return 质量压缩后的图片
-     */
-    private  Bitmap compressByQuality(Bitmap src, int quality, boolean recycle) {
-        if (isEmptyBitmap(src) || quality < 0 || quality > 100) return null;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        src.compress(Bitmap.CompressFormat.JPEG, quality, baos);
-        byte[] bytes = baos.toByteArray();
-        if (recycle && !src.isRecycled()) src.recycle();
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-    }
-    private  boolean isEmptyBitmap(Bitmap src) {
-        return src == null || src.getWidth() == 0 || src.getHeight() == 0;
-    }
 }
