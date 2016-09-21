@@ -514,7 +514,7 @@ public class FeedDetailActivity extends Activity {
 //                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String timeStamp = "JPEG_" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
-                    File dirFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);// 得到picture文件夹目录
+                    File dirFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);// 得到picture文件夹目录
                     File tempFile = File.createTempFile(timeStamp, ".jpg", dirFile);// 在得到picture目录下创建 tempFile 文件
 
                     String strPath = Uri.fromFile(tempFile).getPath();// 图片路径

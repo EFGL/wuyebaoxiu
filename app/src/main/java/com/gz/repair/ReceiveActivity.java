@@ -1,6 +1,7 @@
 package com.gz.repair;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,6 +41,8 @@ public class ReceiveActivity extends BaseActivity {
     CircleProgressBar progressBar;
     private MyAdapter myAdapter;
     private ArrayList<Receive.Result> allData;
+    private int rootId;
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,9 @@ public class ReceiveActivity extends BaseActivity {
         setContentView(R.layout.activity_receive);
         ButterKnife.bind(this);
 
+        SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+        rootId = sp.getInt("rootId", -1);
+        userName = sp.getString("userName", "");
     }
 
     @Override
@@ -81,8 +87,8 @@ public class ReceiveActivity extends BaseActivity {
             String url = MyAppcation.baseUrl + "/get_repair_distribute";
             RequestParams params = new RequestParams(url);
 
-            params.addParameter("root_id", MyAppcation.rootId);
-            params.addParameter("user_name", MyAppcation.userName);
+            params.addParameter("root_id", rootId);
+            params.addParameter("user_name", userName);
 
             x.http().post(params, new Callback.CommonCallback<String>() {
 
@@ -143,8 +149,8 @@ public class ReceiveActivity extends BaseActivity {
         String url = MyAppcation.baseUrl + "/get_repair_distribute";
         RequestParams params = new RequestParams(url);
 
-        params.addParameter("root_id", MyAppcation.rootId);
-        params.addParameter("user_name", MyAppcation.userName);
+        params.addParameter("root_id", rootId);
+        params.addParameter("user_name", userName);
 
         x.http().post(params, new Callback.CommonCallback<String>() {
 

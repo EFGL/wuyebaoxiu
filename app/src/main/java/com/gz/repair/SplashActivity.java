@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class SplashActivity extends BaseActivity {
 
-    private String userName;
+    private String user;
     private String password;
     private AlertDialog.Builder builder;
 
@@ -39,7 +39,7 @@ public class SplashActivity extends BaseActivity {
 
         PushManager.getInstance().initialize(this.getApplicationContext());
         SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
-        userName = sp.getString("userName", "");
+        user = sp.getString("user", "");
         password = sp.getString("password", "");
         new Thread() {
             @Override
@@ -210,25 +210,25 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void startapp() {
-        if (userName.equals("") || password.equals("")) {
+        if (user.equals("") || password.equals("")) {
 
             SplashActivity.this.startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             finish();
         } else {
 
 //                        SplashActivity.this.startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-            autoLogin(userName, password);
+            autoLogin(user, password);
         }
     }
 
 
-    private void autoLogin(String userName, String password) {
+    private void autoLogin(String user, String password) {
 
         Log.e("my", "开始请求");
         String url = MyAppcation.baseUrl + "/repair_login";
         RequestParams params = new RequestParams(url);
 
-        params.addBodyParameter("login", userName);
+        params.addBodyParameter("login", user);
         params.addBodyParameter("password", password);
         x.http().post(params, new Callback.CommonCallback<String>() {
 
@@ -260,6 +260,11 @@ public class SplashActivity extends BaseActivity {
                     MyAppcation.userId = login.result.user_id;
                     MyAppcation.rootId = login.result.root_id;
                     MyAppcation.userName = login.result.user_name;
+
+                    SharedPreferences config  = getSharedPreferences("config",MODE_PRIVATE);
+                    config.edit().putInt("userId", login.result.user_id).commit();
+                    config.edit().putInt("rootId",login.result.root_id).commit();
+                    config.edit().putString("userName", login.result.user_name).commit();
 
                     startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     finish();

@@ -1,5 +1,8 @@
 package com.gz.repair;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -7,8 +10,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.gz.repair.utils.T;
 import com.igexin.sdk.PushConsts;
 import com.igexin.sdk.PushManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by Endeavor on 2016/8/31.
@@ -20,23 +27,61 @@ public class PushReceiver extends BroadcastReceiver {
 
         switch (bundle.getInt(PushConsts.CMD_ACTION)) {
             case PushConsts.GET_MSG_DATA:
-                // 获取透传数据
-                // String appid = bundle.getString("appid");
-                byte[] payload = bundle.getByteArray("payload");
 
                 String taskid = bundle.getString("taskid");
                 String messageid = bundle.getString("messageid");
-
                 // smartPush第三方回执调用接口，actionid范围为90000-90999，可根据业务场景执行
                 boolean result = PushManager.getInstance().sendFeedbackMessage(context, taskid, messageid, 90001);
                 System.out.println("第三方回执接口调用" + (result ? "成功" : "失败"));
 
-
+                // 获取透传数据
+                byte[] payload = bundle.getByteArray("payload");
                 if (payload != null) {
                     String data = new String(payload);
 
                     Log.d("onReceive", "receiver payload : " + data);
-                    Toast.makeText(context, "收到透传消息 : " + data,Toast.LENGTH_SHORT).show();
+
+
+                    try {
+                        JSONObject js = new JSONObject(data);
+                        String msg = js.getString("msg");
+                        String type = js.getString("type");
+                        // setContentIntent
+                        Intent i = null;
+                        if (type.equals("0")) {
+
+                            i = new Intent(context, ProjectActivity.class);
+                        } else if (type.equals("1")) {
+                            i = new Intent(context, ReceiveActivity.class);
+
+                        } else if (type.equals("2")) {
+
+                            i = new Intent(context, FeedbackActivity.class);
+                        }else {
+                            i = new Intent(context, MainActivity.class);
+
+                        }
+                        PendingIntent pi = PendingIntent.getActivity(context, 0, i, 0);//延迟(等待)意图
+
+                        Notification.Builder builder = new Notification.Builder(context)
+                                .setDefaults(Notification.DEFAULT_ALL)
+                                .setSmallIcon(R.drawable.logo)
+                                .setTicker("您有一条新维修信息")
+                                .setAutoCancel(true)
+                                .setContentTitle("物业报修")
+                                .setContentText(msg)
+                                .setWhen(System.currentTimeMillis())
+                                .setContentIntent(pi);
+
+                        Notification n = builder.build();
+                        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                        manager.notify(3, n);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        T.showShort(context, "推送消息异常");
+                        Toast.makeText(context, "收到透传消息 : " + data, Toast.LENGTH_SHORT).show();
+                    }
+
 
                 }
                 break;
@@ -46,7 +91,7 @@ public class PushReceiver extends BroadcastReceiver {
                 // 第三方应用需要将CID上传到第三方服务器，并且将当前用户帐号和CID进行关联，以便日后通过用户帐号查找CID进行消息推送
                 String cid = bundle.getString("clientid");
 //                Toast.makeText(context,"clientid="+cid,Toast.LENGTH_SHORT).show();
-                if (cid!=null){
+                if (cid != null) {
 
                     MyAppcation.clientid = cid;
 

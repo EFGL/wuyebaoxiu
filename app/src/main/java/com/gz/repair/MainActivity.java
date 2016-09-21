@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.widget.NormalDialog;
 import com.gz.repair.bean.Login;
+import com.igexin.sdk.PushManager;
 import com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar;
 
 import java.util.ArrayList;
@@ -63,6 +64,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
+        PushManager.getInstance().initialize(this.getApplicationContext());
         super.onResume();
         List<Login.Result.Privileges> pro = MyAppcation.pro;
         List<String> ids = new ArrayList<String>();
@@ -158,6 +160,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onBtnClick() {
                         dialog.superDismiss();
+                        PushManager.getInstance().initialize(MainActivity.this.getApplicationContext());
                         // 最小化
                         Intent intent = new Intent(Intent.ACTION_MAIN);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -1,6 +1,7 @@
 package com.gz.repair;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import com.google.gson.Gson;
 import com.gz.repair.bean.Project;
 import com.gz.repair.utils.StringUtils;
 import com.gz.repair.utils.T;
+import com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,10 +38,11 @@ public class ProjectActivity extends BaseActivity {
     RecyclerView rcy;
     @Bind(R.id.refresh)
     MaterialRefreshLayout refresh;
-    //    @Bind(R.id.sry)
-//    SwipeRefreshLayout sry;
+    @Bind(R.id.progressBar)
+    CircleProgressBar progressBar;
     private MyAdapter myAdapter;
     private ArrayList<Project.Result> alldata;
+    private int rootId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,8 @@ public class ProjectActivity extends BaseActivity {
 
 //        sry.setOnRefreshListener(this);
 //        sry.setColorSchemeColors(Color.parseColor("#00BCD4"));
-
+        SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+        rootId = sp.getInt("rootId", -1);
 
     }
 
@@ -61,11 +65,11 @@ public class ProjectActivity extends BaseActivity {
 
     private void InitData() {
         if (alldata == null) {
+            progressBar.setVisibility(View.VISIBLE);
             Log.e("my", "开始请求");
             String url = MyAppcation.baseUrl + "/get_repair_apply_tobedone";
             RequestParams params = new RequestParams(url);
-//        params.addBodyParameter("root_id", MyAppcation.rootId);
-            params.addParameter("root_id", MyAppcation.rootId);
+            params.addParameter("root_id", rootId);
             x.http().post(params, new Callback.CommonCallback<String>() {
 
 
@@ -108,6 +112,7 @@ public class ProjectActivity extends BaseActivity {
 
                 @Override
                 public void onFinished() {
+                    progressBar.setVisibility(View.GONE);
                     Log.e("my", "onFinished");
                 }
 
@@ -140,8 +145,8 @@ public class ProjectActivity extends BaseActivity {
         Log.e("my", "开始请求");
         String url = MyAppcation.baseUrl + "/get_repair_apply_tobedone";
         RequestParams params = new RequestParams(url);
-//        params.addBodyParameter("root_id", MyAppcation.rootId);
-        params.addParameter("root_id", MyAppcation.rootId);
+
+        params.addParameter("root_id", rootId);
         x.http().post(params, new Callback.CommonCallback<String>() {
 
 
@@ -209,9 +214,9 @@ public class ProjectActivity extends BaseActivity {
 
             holder.mAddress.setText("地址:" + alldata.get(position).address);
             String state = alldata.get(position).status;
-            if (state.equals("待处理")){
+            if (state.equals("待处理")) {
                 holder.mState.setTextColor(Color.RED);
-            }else if (state.equals("已派单")){
+            } else if (state.equals("已派单")) {
                 holder.mState.setTextColor(Color.GREEN);
 
             }
@@ -229,7 +234,7 @@ public class ProjectActivity extends BaseActivity {
                     i.putExtra("telephone", alldata.get(position).telephone);
                     i.putExtra("address", alldata.get(position).address);
                     i.putExtra("info", alldata.get(position).info);
-                    i.putExtra("code" ,alldata.get(position).code);
+                    i.putExtra("code", alldata.get(position).code);
                     ProjectActivity.this.startActivity(i);
                 }
             });

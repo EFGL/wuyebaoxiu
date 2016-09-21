@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E0F7FA"
-    android:orientation="vertical">
-
+    android:background="#E0F7FA">
 
     <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -19,6 +19,7 @@
         app:titleTextColor="#fff" />
 
     <com.cjj.MaterialRefreshLayout
+        android:layout_below="@id/toolbar"
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -33,5 +34,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </com.cjj.MaterialRefreshLayout>
-
-</LinearLayout>
+    <com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        app:mlpb_arrow_height="5dp"
+        app:mlpb_arrow_width="10dp"
+        app:mlpb_enable_circle_background="true"
+        app:mlpb_progress_color="@color/colorAccent"
+        app:mlpb_progress_stoke_width="5dp"
+        app:mlpb_show_arrow="true" />
+</RelativeLayout>

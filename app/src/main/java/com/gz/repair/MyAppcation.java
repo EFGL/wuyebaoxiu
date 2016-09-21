@@ -1,6 +1,7 @@
 package com.gz.repair;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 
 import com.gz.repair.bean.Login;
 

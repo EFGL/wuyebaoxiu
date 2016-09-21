@@ -1,48 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/coo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E0F7FA"
-    android:orientation="vertical">
+    android:background="#E0F7FA">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/project_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="10dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="物业派工"
+        app:titleTextColor="#fff" />
 
-        <android.support.v7.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:elevation="10dp"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="物业报修"
-            app:titleTextColor="#fff" />
-    <!--    <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/sry"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <com.cjj.MaterialRefreshLayout
+        android:layout_below="@id/project_toolbar"
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:overlay="false"
+        app:wave_color="#B2EBF2"
+        app:wave_height_type="normal"
+        app:wave_show="true">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rcy"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </android.support.v4.widget.SwipeRefreshLayout>-->
-
-        <com.cjj.MaterialRefreshLayout
-            android:id="@+id/refresh"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rcy"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:overlay="false"
-            app:wave_color="#B2EBF2"
-            app:wave_height_type="normal"
-            app:wave_show="true">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </com.cjj.MaterialRefreshLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rcy"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </com.cjj.MaterialRefreshLayout>
-
-</LinearLayout>
+    <com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        app:mlpb_arrow_height="5dp"
+        app:mlpb_arrow_width="10dp"
+        app:mlpb_enable_circle_background="true"
+        app:mlpb_progress_color="@color/colorAccent"
+        app:mlpb_progress_stoke_width="5dp"
+        app:mlpb_show_arrow="true" />
+</RelativeLayout>

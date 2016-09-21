@@ -54,11 +54,7 @@ public class LoginActivity extends BaseActivity {
 
 
         config = getSharedPreferences("config",MODE_PRIVATE);
-//        String userName = config.getString("userName", "");
-//        String password = config.getString("password", "");
-//
-//        mUser.setText(userName);
-//        pwd.setText(password);
+
     }
 
 
@@ -119,7 +115,7 @@ public class LoginActivity extends BaseActivity {
 //                Log.e("my", "login.toString==" + login.toString());
                 if (login.ret == 0) {
 
-                    config.edit().putString("userName",user).commit();
+                    config.edit().putString("user",user).commit();
                     config.edit().putString("password",password).commit();
 
 
@@ -127,9 +123,13 @@ public class LoginActivity extends BaseActivity {
                     ArrayList<Login.Result.Privileges> privileges = login.result.privileges;
                     MyAppcation.pro.clear();
                     MyAppcation.pro.addAll(privileges);
+
                     MyAppcation.userId = login.result.user_id;
                     MyAppcation.rootId = login.result.root_id;
                     MyAppcation.userName = login.result.user_name;
+                    config.edit().putInt("userId", login.result.user_id).commit();
+                    config.edit().putInt("rootId",login.result.root_id).commit();
+                    config.edit().putString("userName", login.result.user_name).commit();
 //                    Log.e("is==", LoginActivity.this.getSharedPreferences("config", MODE_PRIVATE).getBoolean("isSuccess", true) + "");
                     if (MyAppcation.userId != -1 && MyAppcation.clientid != null) {
 

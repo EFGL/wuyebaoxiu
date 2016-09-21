@@ -2,6 +2,7 @@ package com.gz.repair;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import com.google.gson.Gson;
 import com.gz.repair.bean.FeedNote;
 import com.gz.repair.utils.StringUtils;
 import com.gz.repair.utils.T;
+import com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,14 +39,23 @@ public class FeedbackActivity extends Activity {
     RecyclerView rcy;
     @Bind(R.id.refresh)
     MaterialRefreshLayout refresh;
+    @Bind(R.id.progressBar)
+    CircleProgressBar progressBar;
     private ArrayList<FeedNote.Result> allData;
     private MyAdapter myAdapter;
+    private int rootId;
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
         ButterKnife.bind(this);
+
+        SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+        rootId = sp.getInt("rootId", -1);
+        userName = sp.getString("userName", "");
+
     }
 
     @Override
@@ -55,11 +66,12 @@ public class FeedbackActivity extends Activity {
 
     private void InitData() {
         if (allData == null) {
+            progressBar.setVisibility(View.VISIBLE);
             Log.e("my", "开始请求");
             String url = MyAppcation.baseUrl + "/get_repair_feedback";
             RequestParams params = new RequestParams(url);
-            params.addParameter("root_id", MyAppcation.rootId);
-            params.addParameter("user_name", MyAppcation.userName);
+            params.addParameter("root_id", rootId);
+            params.addParameter("user_name",userName);
             x.http().post(params, new Callback.CommonCallback<String>() {
 
 
@@ -98,6 +110,7 @@ public class FeedbackActivity extends Activity {
 
                 @Override
                 public void onFinished() {
+                    progressBar.setVisibility(View.GONE);
                     Log.e("my", "onFinished");
                 }
 
@@ -128,8 +141,8 @@ public class FeedbackActivity extends Activity {
         Log.e("my", "开始请求");
         String url = MyAppcation.baseUrl + "/get_repair_feedback";
         RequestParams params = new RequestParams(url);
-        params.addParameter("root_id", MyAppcation.rootId);
-        params.addParameter("user_name", MyAppcation.userName);
+        params.addParameter("root_id", rootId);
+        params.addParameter("user_name", userName);
         x.http().post(params, new Callback.CommonCallback<String>() {
 
 
@@ -210,24 +223,24 @@ public class FeedbackActivity extends Activity {
                 public void onClick(View view) {
                     String state = holder.mState.getText().toString().trim();
 
-                        Intent i = new Intent(FeedbackActivity.this, FeedNoteActivity.class);
-                        i.putExtra("maintainer", allData.get(position).maintainer);
-                        i.putExtra("repair_item", allData.get(position).repair_item);
-                        i.putExtra("begin_at", StringUtils.string2Time(allData.get(position).begin_at));
-                        i.putExtra("end_at", StringUtils.string2Time(allData.get(position).end_at));
-                        i.putExtra("code", allData.get(position).code);
-                        i.putExtra("result", allData.get(position).result);
+                    Intent i = new Intent(FeedbackActivity.this, FeedNoteActivity.class);
+                    i.putExtra("maintainer", allData.get(position).maintainer);
+                    i.putExtra("repair_item", allData.get(position).repair_item);
+                    i.putExtra("begin_at", StringUtils.string2Time(allData.get(position).begin_at));
+                    i.putExtra("end_at", StringUtils.string2Time(allData.get(position).end_at));
+                    i.putExtra("code", allData.get(position).code);
+                    i.putExtra("result", allData.get(position).result);
 
-                        i.putExtra("apply_name", allData.get(position).apply_name);
-                        i.putExtra("created_at", StringUtils.str2Time(allData.get(position).created_at));
-                        i.putExtra("telephone", allData.get(position).telephone);
-                        i.putExtra("address", allData.get(position).address);
-                        i.putExtra("info", allData.get(position).info);
-                        i.putExtra("image_1", allData.get(position).image_1);
-                        i.putExtra("image_2", allData.get(position).image_2);
-                        i.putExtra("image_3", allData.get(position).image_3);
-                        i.putExtra("image_4", allData.get(position).image_4);
-                        FeedbackActivity.this.startActivity(i);
+                    i.putExtra("apply_name", allData.get(position).apply_name);
+                    i.putExtra("created_at", StringUtils.str2Time(allData.get(position).created_at));
+                    i.putExtra("telephone", allData.get(position).telephone);
+                    i.putExtra("address", allData.get(position).address);
+                    i.putExtra("info", allData.get(position).info);
+                    i.putExtra("image_1", allData.get(position).image_1);
+                    i.putExtra("image_2", allData.get(position).image_2);
+                    i.putExtra("image_3", allData.get(position).image_3);
+                    i.putExtra("image_4", allData.get(position).image_4);
+                    FeedbackActivity.this.startActivity(i);
 
 
                 }
