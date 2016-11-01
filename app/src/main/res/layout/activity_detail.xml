@@ -16,9 +16,9 @@
             android:background="?attr/colorPrimary"
             android:elevation="10dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:title="派工详情"
-            app:layout_scrollFlags="scroll|enterAlways"
             app:titleTextColor="#fff" />
     </android.support.design.widget.AppBarLayout>
 
@@ -37,10 +37,10 @@
         app:mlpb_show_arrow="true" />
 
     <android.support.v4.widget.NestedScrollView
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/de_toolbar">
+        android:layout_below="@id/de_toolbar"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -182,6 +182,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="是否有偿服务"
+                android:textSize="18sp" />
+
+            <include layout="@layout/view_horizontal" />
+
+            <RadioGroup
+                android:id="@+id/radio_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_free"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="无偿服务" />
+
+                <RadioButton
+                    android:id="@+id/rb_money"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="有偿服务" />
+            </RadioGroup>
 
             <Button
                 android:id="@+id/ok"

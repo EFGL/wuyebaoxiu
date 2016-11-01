@@ -53,6 +53,15 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/item_note_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="备注："
+            android:textSize="16sp" />
+
+        <TextView
             android:id="@+id/item_note_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

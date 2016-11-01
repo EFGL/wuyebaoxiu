@@ -38,6 +38,8 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
 
         PushManager.getInstance().initialize(this.getApplicationContext());
+        startService(new Intent(SplashActivity.this, Service1.class));
+
         SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
         user = sp.getString("user", "");
         password = sp.getString("password", "");

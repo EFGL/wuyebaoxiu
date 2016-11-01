@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.widget.NormalDialog;
 import com.google.gson.Gson;
 import com.gz.repair.bean.FeedBack;
 import com.gz.repair.utils.StringUtils;
@@ -103,6 +105,8 @@ public class BackActivity extends BaseActivity {
                 @Override
                 public void onFinished() {
                     Log.e("my", "onFinished");
+//                    View empty = View.inflate(BackActivity.this, R.layout.test, null);
+//                    rcy.setEmptyView(empty);
                 }
 
             });
@@ -160,6 +164,8 @@ public class BackActivity extends BaseActivity {
                 Log.e("my", "onFinished");
 
                 refresh.finishRefresh();
+//                View empty = View.inflate(BackActivity.this, R.layout.test, null);
+//                rcy.setEmptyView(empty);
             }
 
         });
@@ -171,6 +177,7 @@ public class BackActivity extends BaseActivity {
         rcy.setLayoutManager(lm);
         myAdapter = new MyAdapter();
         rcy.setAdapter(myAdapter);
+
 
         refresh.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
@@ -207,19 +214,7 @@ public class BackActivity extends BaseActivity {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    Intent i = new Intent(BackActivity.this, FeedDetailActivity.class);
-                    i.putExtra("apply_name", allData.get(position).apply_name);
-                    i.putExtra("telephone", allData.get(position).telephone);
-                    i.putExtra("address", allData.get(position).address);
-                    i.putExtra("info", allData.get(position).info);
-                    i.putExtra("code", allData.get(position).code);
-                    i.putExtra("created_at", StringUtils.str2Time(allData.get(position).created_at));
-                    i.putExtra("operator", allData.get(position).operator);
-
-                    BackActivity.this.startActivity(i);
-
-//                    BackActivity.this.startActivity(new Intent(BackActivity.this, DetailActivity.class));
+                    showAsk(position);
                 }
             });
         }
@@ -231,7 +226,53 @@ public class BackActivity extends BaseActivity {
 
     }
 
+    public void showAsk(final int position){
+        final NormalDialog dialog = new NormalDialog(this);
+        dialog.content("该条信息是否维修成功?")//
+                .btnText("未完成","已成功")
+                .showAnim(mBasIn)//
+                .isTitleShow(false)
+                .dismissAnim(mBasOut)//
+                .show();
 
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+//                        Toast.makeText(BackActivity.this, "未完成", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+
+                        Intent i = new Intent(BackActivity.this, FeedDetailActivity2.class);
+                        i.putExtra("apply_name", allData.get(position).apply_name);
+                        i.putExtra("telephone", allData.get(position).telephone);
+                        i.putExtra("address", allData.get(position).address);
+                        i.putExtra("info", allData.get(position).info);
+                        i.putExtra("code", allData.get(position).code);
+                        i.putExtra("created_at", StringUtils.str2Time(allData.get(position).created_at));
+                        i.putExtra("operator", allData.get(position).operator);
+
+                        BackActivity.this.startActivity(i);
+                    }
+                },
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+//                        Toast.makeText(BackActivity.this,"成功",Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+
+                        Intent i = new Intent(BackActivity.this, FeedDetailActivity.class);
+                        i.putExtra("apply_name", allData.get(position).apply_name);
+                        i.putExtra("telephone", allData.get(position).telephone);
+                        i.putExtra("address", allData.get(position).address);
+                        i.putExtra("info", allData.get(position).info);
+                        i.putExtra("code", allData.get(position).code);
+                        i.putExtra("created_at", StringUtils.str2Time(allData.get(position).created_at));
+                        i.putExtra("operator", allData.get(position).operator);
+
+                        BackActivity.this.startActivity(i);
+                    }
+                });
+    }
     class MyHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.item_back_number)

@@ -28,6 +28,7 @@ public class Receive {
         public String info;
         public String distribute_time;
         public String operator;
+        public int is_charged;
 
     }
 

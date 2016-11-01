@@ -236,6 +236,7 @@ public class ReceiveActivity extends BaseActivity {
                     i.putExtra("code", allData.get(position).code);
                     i.putExtra("created_at", StringUtils.str2Time(allData.get(position).created_at));
                     i.putExtra("operator", allData.get(position).operator);
+                    i.putExtra("is_charged", allData.get(position).is_charged);
 
                     ReceiveActivity.this.startActivity(i);
                 }

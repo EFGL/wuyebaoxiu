@@ -181,7 +181,26 @@
             android:configChanges="orientation|screenSize" />
         <activity
             android:name=".FeedPhotoDetailActivity"
-            android:label="@string/title_activity_feed_photo_detail"></activity>
+            android:label="@string/title_activity_feed_photo_detail" />
+
+        <!-- 守护进程 -->
+        <service
+            android:name=".Service1"
+            android:process=":process1" />
+
+        <receiver
+            android:name=".Receiver1"
+            android:process=":process1" />
+
+        <service
+            android:name=".Service2"
+            android:process=":process2" />
+
+        <receiver
+            android:name=".Receiver2"
+            android:process=":process2" />
+
+        <activity android:name=".FeedDetailActivity2"></activity>
     </application>
 
 </manifest>

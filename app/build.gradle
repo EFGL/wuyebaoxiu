@@ -1,14 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.3'
+    compileSdkVersion 24
+    buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "com.gz.repair"
         minSdkVersion 16
         targetSdkVersion 22
         versionName '2.0'
-        generatedDensities = []
         versionCode 2
     }
     buildTypes {
@@ -17,11 +16,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    productFlavors {
-    }
-    aaptOptions {
-        additionalParameters "--no-version-vectors"
-    }
+
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
@@ -31,7 +26,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile files('libs/GetuiSDK2.9.0.0.jar')
     compile 'com.android.support:support-v4'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.1.1'
@@ -49,4 +43,5 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.uwetrottmann.photoview:library:1.2.4'
     compile 'com.blankj:utilcode:1.1.5'
+    compile project(':LibMarsdaemon')
 }

@@ -111,6 +111,7 @@ public class FeedbackActivity extends Activity {
                 @Override
                 public void onFinished() {
                     progressBar.setVisibility(View.GONE);
+//                    FeedbackActivity.this.getWindow().setContentView(R.layout.test);
                     Log.e("my", "onFinished");
                 }
 
@@ -218,6 +219,14 @@ public class FeedbackActivity extends Activity {
             holder.mTime.setText("" + StringUtils.str2Time(allData.get(position).created_at));
             holder.mCode.setText("单号:" + allData.get(position).code);
 
+            if(allData.get(position).note==null){
+                holder.mNote.setVisibility(View.GONE);
+            }else{
+                holder.mNote.setVisibility(View.VISIBLE);
+                holder.mNote.setText("备注:"+allData.get(position).note);
+            }
+
+
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -236,10 +245,11 @@ public class FeedbackActivity extends Activity {
                     i.putExtra("telephone", allData.get(position).telephone);
                     i.putExtra("address", allData.get(position).address);
                     i.putExtra("info", allData.get(position).info);
-                    i.putExtra("image_1", allData.get(position).image_1);
-                    i.putExtra("image_2", allData.get(position).image_2);
-                    i.putExtra("image_3", allData.get(position).image_3);
-                    i.putExtra("image_4", allData.get(position).image_4);
+                    i.putExtra("image_1", allData.get(position).images.get(0).image_1);
+                    i.putExtra("image_2", allData.get(position).images.get(0).image_2);
+                    i.putExtra("image_3", allData.get(position).images.get(0).image_3);
+                    i.putExtra("image_4", allData.get(position).images.get(0).image_4);
+                    i.putExtra("is_charged",allData.get(position).is_charged);
                     FeedbackActivity.this.startActivity(i);
 
 
@@ -266,6 +276,8 @@ public class FeedbackActivity extends Activity {
         TextView mInfo;
         @Bind(R.id.item_note_time)
         TextView mTime;
+        @Bind(R.id.item_note_note)
+        TextView mNote;
 
         public MyHolder(View itemView) {
             super(itemView);

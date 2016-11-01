@@ -40,6 +40,8 @@ public class ReceiverDetailActivity extends Activity {
     TextView mCreateTime;
     @Bind(R.id.receiver_deatail_sir)
     TextView mSir;
+    @Bind(R.id.tv_service)
+    TextView tvService;
     private String code;
 
     @Override
@@ -55,14 +57,21 @@ public class ReceiverDetailActivity extends Activity {
         String info = i.getStringExtra("info");
         String created_at = i.getStringExtra("created_at");
         String operator = i.getStringExtra("operator");
+        int is_charged = i.getIntExtra("is_charged", 0);
         code = i.getStringExtra("code");
 
         mName.setText(apply_name + "");
         mPhone.setText(telephone + "");
         mAddress.setText(address + "");
         mInfo.setText(info + "");
-        mCreateTime.setText(created_at+"");
-        mSir.setText(operator+"");
+        mCreateTime.setText(created_at + "");
+        mSir.setText(operator + "");
+
+        if (is_charged == 1) {
+            tvService.setText("有偿服务");
+        } else {
+            tvService.setText("无偿服务");
+        }
     }
 
     @OnClick(R.id.receiver_deatail_ok)

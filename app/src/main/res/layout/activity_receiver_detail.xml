@@ -52,7 +52,6 @@
                 android:id="@+id/receiver_detail_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="张三"
                 android:textColor="#000"
                 android:textSize="15sp" />
 
@@ -69,7 +68,6 @@
                 android:id="@+id/receuver_detail_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="13843838438"
                 android:textColor="#000"
                 android:textSize="15sp" />
 
@@ -86,7 +84,6 @@
                 android:id="@+id/receiver_deatail_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2011-1-1-1-1-1-1-1"
                 android:textColor="#000"
                 android:textSize="15sp" />
             <TextView
@@ -102,7 +99,6 @@
                 android:id="@+id/receiver_deatail_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="3号楼3-22室"
                 android:textColor="#000"
                 android:textSize="15sp" />
             <TextView
@@ -118,7 +114,6 @@
                 android:id="@+id/receiver_deatail_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="水管子破了锅破了筷子破了"
                 android:textColor="#000"
                 android:textSize="15sp" />
             <TextView
@@ -134,9 +129,26 @@
                 android:id="@+id/receiver_deatail_sir"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="雷主管"
                 android:textColor="#000"
                 android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="是否有偿服务"
+                android:textSize="18sp" />
+
+            <include layout="@layout/view_horizontal" />
+
+            <TextView
+                android:id="@+id/tv_service"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="无偿服务"
+                android:textColor="#000"
+                android:textSize="15sp" />
+
             <Button
                 android:id="@+id/receiver_deatail_ok"
                 style="?android:textAppearanceSmall"

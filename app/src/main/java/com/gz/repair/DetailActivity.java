@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -55,6 +56,10 @@ public class DetailActivity extends Activity {
     CircleProgressBar progressBar;
     @Bind(R.id.et_repair_preson)
     EditText mRepairPreson;
+    @Bind(R.id.rb_free)
+    RadioButton rbFree;
+    @Bind(R.id.rb_money)
+    RadioButton rbMoney;
     private String code;
     private String maintainer;
     private int maintainer_id;
@@ -147,11 +152,12 @@ public class DetailActivity extends Activity {
     }
 
 
+    // 确认派工
     private void subForServer() {
         if (threeIsShow) {
             String name = mRepairPreson.getText().toString().trim();
             if (TextUtils.isEmpty(name)) {
-                T.showShort(DetailActivity.this,"请输入维修人员姓名");
+                T.showShort(DetailActivity.this, "请输入维修人员姓名");
                 return;
             }
         }
@@ -173,6 +179,14 @@ public class DetailActivity extends Activity {
         }
         params.addParameter("repair_type", repair_type);
         params.addParameter("user_name", MyAppcation.userName);
+
+        if (rbFree.isChecked()){
+            params.addParameter("is_charged", 0);
+        }else if (rbMoney.isChecked()){
+            params.addParameter("is_charged", 1);
+        }else{
+            params.addParameter("is_charged", 0);
+        }
 
         x.http().post(params, new Callback.CommonCallback<String>() {
 

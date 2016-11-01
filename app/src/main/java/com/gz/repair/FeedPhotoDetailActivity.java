@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
+// 大图
 public class FeedPhotoDetailActivity extends Activity {
 
     @Bind(R.id.pv)

@@ -53,6 +53,8 @@ public class FeedNoteActivity extends Activity {
     ImageView mImg3;
     @Bind(R.id.iv_back_img4)
     ImageView mImg4;
+    @Bind(R.id.isMoney)
+    TextView isMoney;
     private String image_1;
     private String image_2;
     private String image_3;
@@ -76,29 +78,36 @@ public class FeedNoteActivity extends Activity {
         String telephone = intent.getStringExtra("telephone");
         String address = intent.getStringExtra("address");
         String info = intent.getStringExtra("info");
+        int is_charged = intent.getIntExtra("is_charged", 0);
 
         image_1 = intent.getStringExtra("image_1");
         image_2 = intent.getStringExtra("image_2");
         image_3 = intent.getStringExtra("image_3");
         image_4 = intent.getStringExtra("image_4");
 
-        if (!TextUtils.isEmpty(image_1)){
-            Log.w("ph","image_1=="+ image_1);
+        if (!TextUtils.isEmpty(image_1)) {
+            Log.w("ph", "image_1==" + image_1);
             showImg(mImg1, image_1);
         }
-        if (!TextUtils.isEmpty(image_2)){
-            Log.w("ph","image_2=="+ image_2);
+        if (!TextUtils.isEmpty(image_2)) {
+            Log.w("ph", "image_2==" + image_2);
             showImg(mImg2, image_2);
         }
-        if (!TextUtils.isEmpty(image_3)){
-            Log.w("ph","image_3=="+ image_3);
+        if (!TextUtils.isEmpty(image_3)) {
+            Log.w("ph", "image_3==" + image_3);
             showImg(mImg3, image_3);
         }
-        if (!TextUtils.isEmpty(image_4)){
-            Log.w("ph","image_4=="+ image_4);
+        if (!TextUtils.isEmpty(image_4)) {
+            Log.w("ph", "image_4==" + image_4);
             showImg(mImg4, image_4);
         }
 
+        if (is_charged == 1) {
+            isMoney.setText("有偿服务");
+        } else {
+            isMoney.setText("无偿服务");
+
+        }
 
         mMaintainer.setText(maintainer);
         mRepairItem.setText(repair_item);
@@ -118,8 +127,8 @@ public class FeedNoteActivity extends Activity {
         }
     }
 
-    private void showImg(ImageView imageView,String imgName) {
-        String url = "http://ceshi.sx-soft.net/repair_distribute_images/"+imgName;
+    private void showImg(ImageView imageView, String imgName) {
+        String url = "http://ceshi.sx-soft.net/repair_distribute_images/" + imgName;
         imageView.setVisibility(View.VISIBLE);
         Glide.with(this).load(url).thumbnail(0.1f).placeholder(R.drawable.load).error(R.drawable.error).into(imageView);
     }
@@ -128,25 +137,25 @@ public class FeedNoteActivity extends Activity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back_img1:
-                if (!TextUtils.isEmpty(image_1)){
+                if (!TextUtils.isEmpty(image_1)) {
 
                     showBigImg(image_1);
                 }
                 break;
             case R.id.iv_back_img2:
-                if (!TextUtils.isEmpty(image_2)){
+                if (!TextUtils.isEmpty(image_2)) {
 
                     showBigImg(image_2);
                 }
                 break;
             case R.id.iv_back_img3:
-                if (!TextUtils.isEmpty(image_3)){
+                if (!TextUtils.isEmpty(image_3)) {
 
                     showBigImg(image_3);
                 }
                 break;
             case R.id.iv_back_img4:
-                if (!TextUtils.isEmpty(image_4)){
+                if (!TextUtils.isEmpty(image_4)) {
 
                     showBigImg(image_4);
                 }
@@ -155,10 +164,10 @@ public class FeedNoteActivity extends Activity {
     }
 
     private void showBigImg(String path) {
-        String url = "http://ceshi.sx-soft.net/repair_distribute_images/"+path;
+        String url = "http://ceshi.sx-soft.net/repair_distribute_images/" + path;
         // 大图页面
         Intent intent = new Intent(FeedNoteActivity.this, FeedPhotoDetailActivity.class);
-        intent.putExtra("path",url);
+        intent.putExtra("path", url);
         FeedNoteActivity.this.startActivity(intent);
     }
 }

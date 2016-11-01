@@ -241,10 +241,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
+                android:text="是否有偿服务"
+                android:textSize="18sp" />
+
+            <include layout="@layout/view_horizontal" />
+
+            <TextView
+                android:id="@+id/isMoney"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
                 android:text="反馈照片"
                 android:textSize="18sp" />
 
             <include layout="@layout/view_horizontal" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -252,39 +269,39 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:visibility="invisible"
                     android:id="@+id/iv_back_img1"
                     android:layout_width="0dp"
                     android:layout_height="80dp"
                     android:layout_weight="1"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/ic_launcher"
+                    android:visibility="invisible" />
 
                 <ImageView
-                    android:visibility="invisible"
                     android:id="@+id/iv_back_img2"
                     android:layout_width="0dp"
                     android:layout_height="80dp"
                     android:layout_marginLeft="7dp"
                     android:layout_weight="1"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/ic_launcher"
+                    android:visibility="invisible" />
 
                 <ImageView
-                    android:visibility="invisible"
                     android:id="@+id/iv_back_img3"
                     android:layout_width="0dp"
                     android:layout_height="80dp"
                     android:layout_marginLeft="7dp"
                     android:layout_weight="1"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:src="@mipmap/ic_launcher"
+                    android:visibility="invisible" />
 
                 <ImageView
-                    android:visibility="invisible"
                     android:id="@+id/iv_back_img4"
                     android:layout_width="0dp"
                     android:layout_height="80dp"
                     android:layout_marginLeft="7dp"
                     android:layout_weight="1"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:src="@mipmap/ic_launcher"
+                    android:visibility="invisible" />
             </LinearLayout>
 
         </LinearLayout>

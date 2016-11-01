@@ -204,6 +204,8 @@
                 android:textColor="#fff"
                 android:textStyle="bold" />-->
 
+
+
             <Button
                 android:id="@+id/feed_deatail_ok"
                 style="?android:textAppearanceSmall"
