@@ -33,6 +33,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/*
+ * 派工详情
+ */
 public class DetailActivity extends Activity {
 
 
@@ -180,14 +183,15 @@ public class DetailActivity extends Activity {
         params.addParameter("repair_type", repair_type);
         params.addParameter("user_name", MyAppcation.userName);
 
-        if (rbFree.isChecked()){
+        if (rbFree.isChecked()) {
             params.addParameter("is_charged", 0);
-        }else if (rbMoney.isChecked()){
+        } else if (rbMoney.isChecked()) {
             params.addParameter("is_charged", 1);
-        }else{
+        } else {
             params.addParameter("is_charged", 0);
         }
 
+        Log.e("ende","params=="+params);
         x.http().post(params, new Callback.CommonCallback<String>() {
 
 

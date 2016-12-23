@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class MyAppcation extends DaemonApplication {
 
-    public static String baseUrl = "http://ceshi.sx-soft.net/android_oa";
+    public static String baseUrl = "http://mylife114.com/android_oa";
     public static int userId = -1 ;
     public static int rootId = -1 ;
     public static String userName  ;

@@ -53,7 +53,7 @@ public class LoginActivity extends BaseActivity {
         ButterKnife.bind(this);
 
 
-        config = getSharedPreferences("config",MODE_PRIVATE);
+        config = getSharedPreferences("config", MODE_PRIVATE);
 
     }
 
@@ -115,8 +115,8 @@ public class LoginActivity extends BaseActivity {
 //                Log.e("my", "login.toString==" + login.toString());
                 if (login.ret == 0) {
 
-                    config.edit().putString("user",user).commit();
-                    config.edit().putString("password",password).commit();
+                    config.edit().putString("user", user).commit();
+                    config.edit().putString("password", password).commit();
 
 
                     T.showShort(LoginActivity.this, login.msg);
@@ -128,7 +128,7 @@ public class LoginActivity extends BaseActivity {
                     MyAppcation.rootId = login.result.root_id;
                     MyAppcation.userName = login.result.user_name;
                     config.edit().putInt("userId", login.result.user_id).commit();
-                    config.edit().putInt("rootId",login.result.root_id).commit();
+                    config.edit().putInt("rootId", login.result.root_id).commit();
                     config.edit().putString("userName", login.result.user_name).commit();
 //                    Log.e("is==", LoginActivity.this.getSharedPreferences("config", MODE_PRIVATE).getBoolean("isSuccess", true) + "");
                     if (MyAppcation.userId != -1 && MyAppcation.clientid != null) {
@@ -146,6 +146,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 Log.e("my", "onError" + ex.toString());
+                Toast.makeText(LoginActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
             }
 
             @Override

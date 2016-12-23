@@ -105,11 +105,13 @@ public class SplashActivity extends BaseActivity {
             public void onError(Throwable ex, boolean isOnCallback) {
                 Log.e("my", "onError" + ex.toString());
                 T.showShort(SplashActivity.this, "网络错误");
+                startapp();
             }
 
             @Override
             public void onCancelled(CancelledException cex) {
                 Log.e("my", "onCancelled" + cex.toString());
+                startapp();
             }
 
             @Override
@@ -279,6 +281,7 @@ public class SplashActivity extends BaseActivity {
             public void onError(Throwable ex, boolean isOnCallback) {
                 Log.e("my", "onError" + ex.toString());
                 T.showShort(SplashActivity.this,"网络错误");
+
             }
 
             @Override
